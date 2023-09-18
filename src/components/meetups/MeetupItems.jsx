@@ -26,7 +26,20 @@ function MeetupItem(props) {
 
     function deleteMeetupHandler() {
         setIsDeleting(true);
-
+        fetch(`https://react-project-d6450-default-rtdb.firebaseio.com/meetups/${props.id}.json`, {
+            method: 'DELETE',
+        })
+            .then((response) => {
+                if (response.ok) {
+                    props.meetupDeleted();
+                    console.log('Document deleted successfully.');
+                } else {
+                    console.error('Error deleting document:', response.statusText);
+                }
+            })
+            .catch((error) => {
+                console.error('Error deleting document:', error);
+            });
     }
 
     function confirmDeleteHandler() {
@@ -81,7 +94,9 @@ function MeetupItem(props) {
                             </button>
 
                             <div>
-                            <button onClick={toggleEditHandler}>Delete</button>
+                                {isDeleting && <span>Deleting...</span>}
+                                {!isDeleting && <button onClick={deleteMeetupHandler}>Delete</button>}
+
                             </div>
 
                         </div>

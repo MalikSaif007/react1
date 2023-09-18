@@ -32,7 +32,7 @@ function AllMeetupsPage() {
     }
 
     useEffect(() => {
-        fetchMeetups()
+
     }, []);
 
     if (isLoading) {
